@@ -1,0 +1,36 @@
+definitions:
+
+  images:
+    terraform: &img-python
+      image: python:3.6-stretch
+
+  steps:
+    train_pipeline: &step-train_pipeline
+      <<: *img-python
+      name: Training model
+      script:
+        - apt-get update && apt-get install -y zip && pip install --upgrade pip && pip install awscli
+        - aws --version
+      artifacts:
+        - training_job_name.txt
+            
+    deploy_pipeline: &step-deploy_pipeline
+      <<: *img-python
+      name: Deploy model
+      trigger: manual
+
+
+pipelines:
+  custom:
+
+    1.0.TF2_KERAS_MODEL:
+      - step: 
+          <<: *step-train_pipeline
+          script:
+            - sh bin/train_deploy.sh mnist_tensorflow2_scriptmode train
+      - step: 
+          <<: *step-deploy_pipeline
+          script:
+            - sh bin/train_deploy.sh mnist_tensorflow2_scriptmode deploy
+            
+    

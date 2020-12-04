@@ -1,0 +1,32 @@
+{
+        "input-shape": "(28, 28, 1)",
+        "num-classes": 10,
+        "epochs": 2,
+        "batch-size": 64,
+        "learning-rate": 1e-2,
+        "optimizer": "adam",
+        "momentum": 0.9,
+        "weight-decay": 1e-2,
+        "l2-regul": 1e-2,
+        "dropout": 0.1,
+        "cnn" : [
+            {
+                "filters": 32,
+                "kernel": "(3, 3)",
+                "activation": "relu",
+                "padding": "same"
+            },
+            {
+                "filters": 32,
+                "kernel": "(3, 3)",
+                "activation": "relu",
+                "padding": "same"
+            }
+        ],
+        "dense": [
+            {
+                "units": 128,
+                "activation": "relu"
+            }
+        ]
+}
